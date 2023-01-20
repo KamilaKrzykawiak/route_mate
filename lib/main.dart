@@ -1,6 +1,6 @@
+import 'dart:core';
 import 'dart:ffi';
 
-import 'package:chippin_in/TypeOfFuel.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -32,12 +32,12 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class TypeOfFuel{
+class TypeOfFuel {
   late String id;
   late String name;
   late int value;
 
-  TypeOfFuel(String id, String name, int value){
+  TypeOfFuel(String id, String name, int value) {
     this.id = id;
     this.name = name;
     this.value = value;
@@ -45,7 +45,11 @@ class TypeOfFuel{
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<TypeOfFuel> typeOfFuel = [new TypeOfFuel("1","PB 95", 3), new TypeOfFuel("2","PB 98", 4), new TypeOfFuel("3","Diesel", 6)];
+  List<TypeOfFuel> typeOfFuel = [
+    new TypeOfFuel("1", "PB 95", 3),
+    new TypeOfFuel("2", "PB 98", 4),
+    new TypeOfFuel("3", "Diesel", 6)
+  ];
   TypeOfFuel? selectedType;
 
   final TextEditingController fuelController = TextEditingController();
@@ -54,24 +58,20 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController nopController = TextEditingController();
   String holder = '';
 
-  int _counter = 0;
+  late double fp;
+  late double nok;
+  late double afc;
+  late double nop;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    fuelController.dispose();
+    nokController.dispose();
+    afkController.dispose();
+    nopController.dispose();
+    super.dispose();
   }
-
-  // void getDropDownItem() {
-  //   setState(() {
-  //     holder = typeOfFuel as String;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -89,17 +89,18 @@ class _MyHomePageState extends State<MyHomePage> {
                       items: typeOfFuel
                           .map((item) => DropdownMenuItem<TypeOfFuel>(
                                 value: item,
-                                child:
-                                    Text(item.name, style: TextStyle(fontSize: 15)),
+                                child: Text(item.name,
+                                    style: TextStyle(fontSize: 15)),
                               ))
                           .toList(),
                       onChanged: (item) => setState(() => selectedType = item),
+                       // {fp = item as double } // próba zapisu do zmiennej fp
                     ),
                     Padding(
                         padding: EdgeInsets.only(top: 30, bottom: 30),
                         child:
                             //Printing Item on Text Widget
-                            Text('${selectedType?.value.toString()} zł',
+                            Text('${selectedType?.value.toString()} zł  per liter',
                                 //tu powinny wyświetlać się wartości
                                 style: TextStyle(
                                     fontSize: 15, color: Colors.black))),
@@ -129,6 +130,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     hintText: "number of kilometers",
                   ),
+                  onChanged: (text) {
+                    nok = double.parse(text);
+                  },
                 ),
                 const SizedBox(
                   height: 5,
@@ -149,6 +153,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     hintText: "Average fuel consumption",
                   ),
+                  onChanged: (text) {
+                    afc = double.parse(text);
+                  },
                 ),
                 const SizedBox(
                   height: 5,
@@ -169,33 +176,37 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     hintText: "Number of people to chip in",
                   ),
+                  onChanged: (text) {
+                    nop = double.parse(text);
+                  },
                 ),
                 const SizedBox(
                   height: 5,
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    double akfDividedBy = (afc * 0.01);
+                    double intermediateSum = (nok * akfDividedBy);
+                    double sum = (intermediateSum / nop );//tutaj mnożenie przez fp
+
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          content: Text('You have to chip in $sum zł each'),
+                        );
+                      },
+                    );
+                  },
                   child: Container(
                     color: Colors.deepPurple,
                     padding:
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     child: const Text(
                       'Count',
-                      style: TextStyle(color: Colors.white, fontSize: 13.0),
+                      style: TextStyle(color: Colors.white, fontSize: 18.0),
                     ),
                   ),
-                ),
-                Column(
-                  children: [
-                    Container(
-                      color: Colors.deepPurple,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 10),
-                      child: Text('result',
-                          style:
-                              TextStyle(color: Colors.white, fontSize: 13.0)),
-                    ),
-                  ],
                 ),
               ]))),
     );

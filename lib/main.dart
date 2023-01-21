@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
+    false;
     return Container(
 
 
@@ -82,6 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
     colors: [Colors.yellowAccent, Colors.orangeAccent, Colors.purple])),
 
       child: Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: Colors.transparent,
           body: Padding(
               padding: const EdgeInsets.all(50.0),
@@ -119,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     const SizedBox(
                       width: 20.0,
-                      height: 20.0,
+                      height: 15.0,
                     ),
                     // Text(typeOfFuels.toString()),
                     const SizedBox(
@@ -152,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 const SizedBox(
                   width: 20.0,
-                  height: 30.0,
+                  height: 15.0,
                 ),
                 const Text('Average fuel consumption:', style: TextStyle(fontSize: 15),),
                 const SizedBox(
@@ -176,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 const SizedBox(
                   width: 20.0,
-                  height: 30.0,
+                  height: 15.0,
                 ),
                 const Text('Number of people to chip in:', style: TextStyle(fontSize: 15),),
                 const SizedBox(
@@ -200,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 const SizedBox(
                   width: 20.0,
-                  height: 30.0,
+                  height: 15.0,
                 ),
                 TextButton(
                   onPressed: () {

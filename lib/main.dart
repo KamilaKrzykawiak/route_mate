@@ -33,22 +33,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class TypeOfFuel {
-  late String id;
-  late String name;
-  late int value;
+  final String id;
+  final String name;
+  final double value;
 
-  TypeOfFuel(String id, String name, int value) {
-    this.id = id;
-    this.name = name;
-    this.value = value;
-  }
+  TypeOfFuel(this.id, this.name, this.value) {}
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   List<TypeOfFuel> typeOfFuel = [
-    new TypeOfFuel("1", "PB 95", 3),
-    new TypeOfFuel("2", "PB 98", 4),
-    new TypeOfFuel("3", "Diesel", 6)
+    new TypeOfFuel("1", "PB 95", 6.60),
+    new TypeOfFuel("2", "PB 98", 7.04),
+    new TypeOfFuel("3", "Diesel", 7.68)
   ];
   TypeOfFuel? selectedType;
 
@@ -58,10 +54,10 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController nopController = TextEditingController();
   String holder = '';
 
-  late double fp;
-  late double nok;
-  late double afc;
-  late double nop;
+  late double fp = 0;
+  late double nok = 0;
+  late double afc = 0;
+  late double nop = 0;
 
   @override
   void dispose() {
@@ -75,38 +71,55 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+
+    return Container(
+
+
+    decoration: const BoxDecoration(
+    gradient: LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Colors.yellowAccent, Colors.orangeAccent, Colors.purple])),
+
       child: Scaffold(
+          backgroundColor: Colors.transparent,
           body: Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding: const EdgeInsets.all(50.0),
               child: Column(children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Select fuel: '),
-                    DropdownButton<TypeOfFuel>(
-                      value: selectedType,
-                      items: typeOfFuel
-                          .map((item) => DropdownMenuItem<TypeOfFuel>(
-                                value: item,
-                                child: Text(item.name,
-                                    style: TextStyle(fontSize: 15)),
-                              ))
-                          .toList(),
-                      onChanged: (item) => setState(() => selectedType = item),
-                       // {fp = item as double } // próba zapisu do zmiennej fp
+                    const Text(
+                      'Select fuel: ',
+                      style: TextStyle(fontSize: 15),
                     ),
+                    DropdownButton<TypeOfFuel>(
+                        value: selectedType,
+                        items: typeOfFuel
+                            .map((item) => DropdownMenuItem<TypeOfFuel>(
+                                  value: item,
+                                  child: Text(item.name,
+                                      style: TextStyle(fontSize: 15)),
+                                ))
+                            .toList(),
+                        onChanged: (item) {
+                          setState(() {
+                            selectedType = item;
+                            fp = item?.value ?? 0;
+                          });
+                        }
+                        ),
                     Padding(
                         padding: EdgeInsets.only(top: 30, bottom: 30),
                         child:
                             //Printing Item on Text Widget
-                            Text('${selectedType?.value.toString()} zł  per liter',
-                                //tu powinny wyświetlać się wartości
+                            Text('${selectedType?.value} zł  per liter',
                                 style: TextStyle(
                                     fontSize: 15, color: Colors.black))),
 
                     const SizedBox(
-                      height: 5,
+                      width: 20.0,
+                      height: 20.0,
                     ),
                     // Text(typeOfFuels.toString()),
                     const SizedBox(
@@ -114,8 +127,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ],
                 ),
-                const Text('number of kilometers'),
+                const Text('number of kilometers:', style: TextStyle(fontSize: 15),),
+
                 const SizedBox(
+                  width: 20.0,
                   height: 5,
                 ),
                 TextField(
@@ -129,15 +144,17 @@ class _MyHomePageState extends State<MyHomePage> {
                       borderSide: const BorderSide(color: Colors.deepPurple),
                     ),
                     hintText: "number of kilometers",
+
                   ),
                   onChanged: (text) {
                     nok = double.parse(text);
                   },
                 ),
                 const SizedBox(
-                  height: 5,
+                  width: 20.0,
+                  height: 30.0,
                 ),
-                const Text('Average fuel consumption'),
+                const Text('Average fuel consumption:', style: TextStyle(fontSize: 15),),
                 const SizedBox(
                   height: 5,
                 ),
@@ -158,9 +175,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 ),
                 const SizedBox(
-                  height: 5,
+                  width: 20.0,
+                  height: 30.0,
                 ),
-                const Text('Number of people to chip in'),
+                const Text('Number of people to chip in:', style: TextStyle(fontSize: 15),),
                 const SizedBox(
                   height: 5,
                 ),
@@ -181,33 +199,39 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 ),
                 const SizedBox(
-                  height: 5,
+                  width: 20.0,
+                  height: 30.0,
                 ),
                 TextButton(
                   onPressed: () {
-                    double akfDividedBy = (afc * 0.01);
-                    double intermediateSum = (nok * akfDividedBy);
-                    double sum = (intermediateSum / nop );//tutaj mnożenie przez fp
+                    double sum = (fp * nok * 0.01 * afc / nop);
+                    // double akfDividedBy = (afc * 0.01);
+                    // double intermediateSum = (nok * akfDividedBy);
+                    // double sum =
+                    //     (intermediateSum / nop * fp);
 
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return AlertDialog(
-                          content: Text('You have to chip in $sum zł each'),
+                        return Container(
+
+                          child: AlertDialog(
+                            backgroundColor: Colors.lightBlue,
+                            content: Text('You have to chip in $sum zł each.', style: TextStyle(fontSize: 15),),
+                          ),
                         );
                       },
                     );
                   },
-                  child: Container(
-                    color: Colors.deepPurple,
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    child: const Text(
-                      'Count',
-                      style: TextStyle(color: Colors.white, fontSize: 18.0),
-                    ),
+                  child: Text('COUNT',
+                      style:
+                          TextStyle(color: Colors.yellowAccent, fontSize: 15.0)),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightBlue,
+                    shape: CircleBorder(),
+                      padding: EdgeInsets.all(40),
                   ),
-                ),
+                )
               ]))),
     );
   }

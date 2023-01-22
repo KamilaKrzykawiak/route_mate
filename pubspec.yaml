@@ -37,17 +37,22 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_launcher_icons: ^0.11.0
+  http: ^0.13.5
+  geolocator: ^9.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-flutter_launcher_icons: "v0.11.0"
-
+  flutter_launcher_icons: "^0.11.0"
 
 flutter_icons:
-  android: "launcher_icon"
-  ios: true
-  mage_path: "asset/logo/logo.png"
+  android: true
+  ios: false
+  image_path: "assets/logo/logo.png"
+  adaptive_icon_background: "#FDF500"
+  adaptive_icon_foreground: "assets/logo/logo.png"
+
+
 
 
   # The "flutter_lints" package below contains a set of recommended lints to

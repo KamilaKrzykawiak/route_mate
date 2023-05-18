@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:chippin_in/api.dart';
 import 'package:chippin_in/number_field.dart';
 import 'package:chippin_in/type_of_fuel.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -45,15 +46,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    super.initState();//odkomentować do użycia
-    // getPrices().then(
-    //   (value) => setState(
-    //     () {
-    //       typeOfFuel = value;
-    //       isLoading = false;
-    //     },
-    //   ),
-    // );
+    super.initState();
+    // czy to w ogole działa?
+
+    getPrices().then(
+      (value) => setState(
+        () {
+          typeOfFuel = value;
+          isLoading = false;
+        },
+      ),
+    );
   }
 
   @override
@@ -163,6 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   0.01 *
                                   afc /
                                   nop);
+                              getDistanceMatrix();
                               showDialog(
                                 context: context,
                                 builder: (context) {
@@ -188,11 +192,28 @@ class _MyHomePageState extends State<MyHomePage> {
                         shape: CircleBorder(),
                         padding: EdgeInsets.all(40),
                       ),
-                    )
+                    ),
+                    const Text(
+                      'Number of people to chip in:',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
                   ],
                 ),
               ),
       ),
     );
+  }
+
+  getDistanceMatrix() async {
+    try {
+      var response = await Dio().get(
+          'https://maps.googleapis.com/maps/api/distancematrix/json?destinations=40.659569,-73.933783&origins=40.6655101,-73.89188969999998&key=AIzaSyD7w6X2U8SffS4vt6CT29ksceUUPzg1tCk');
+      print(response);
+    } catch (e) {
+      print(e);
+    }
   }
 }

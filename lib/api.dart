@@ -4,28 +4,28 @@ import 'package:chippin_in/type_of_fuel.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 
-
-
-final api_key = "";
+final api_key = "2GRQsj2ajyyzB9nfTSAsVY:1W0Qk11NC2CsrPmiYGdvSD";
 Future<List<TypeOfFuel>> getPrices() async {
   try {
     final position = await _determinePosition();
     var poiUrl = Uri.parse(
         'https://api.collectapi.com/gasPrice/fromCoordinates?lat=${position.latitude}&lng=${position.longitude}');
-    var response = await http.get(poiUrl,headers: {
+    var response = await http.get(poiUrl, headers: {
       'authorization': 'apikey $api_key',
       'content-type': 'application/json'
     });
     final body = json.decode(response.body);
     return [
-      TypeOfFuel( "PB 95",double.parse(body['result']['gasoline'])*4.14),
-      TypeOfFuel("lpg", double.parse(body['result']['lpg'])*4.14),
-      TypeOfFuel("Diesel", double.parse(body['result']['diesel'])*4.14)];
+      TypeOfFuel("PB 95", double.parse(body['result']['gasoline']) * 4.14),
+      TypeOfFuel("lpg", double.parse(body['result']['lpg']) * 4.14),
+      TypeOfFuel("Diesel", double.parse(body['result']['diesel']) * 4.14)
+    ];
   } catch (e) {
     print(e);
     return [];
   }
 }
+
 Future<Position> _determinePosition() async {
   bool serviceEnabled;
   LocationPermission permission;

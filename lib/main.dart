@@ -1,13 +1,16 @@
 import 'dart:core';
 
-import 'package:chippin_in/api.dart';
-import 'package:chippin_in/number_field.dart';
-import 'package:chippin_in/type_of_fuel.dart';
+import 'package:chippin_in/services/api.dart';
+import 'package:chippin_in/pages/destinationForm.dart';
+import 'package:chippin_in/widgets/number_field.dart';
+import 'package:chippin_in/widgets/type_of_fuel.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const ChippinIn());
+  //runApp(const ChippinIn());
+  //runApp(const MyApp());
+  runApp(MaterialApp(home: DestinationForm()));
 }
 
 class ChippinIn extends StatelessWidget {

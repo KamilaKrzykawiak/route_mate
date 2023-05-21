@@ -1,10 +1,11 @@
 import 'dart:convert';
 
-import 'package:chippin_in/type_of_fuel.dart';
+import 'package:chippin_in/widgets/type_of_fuel.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:chippin_in/shared/constants.dart' as Consts;
 
-final api_key = "2GRQsj2ajyyzB9nfTSAsVY:1W0Qk11NC2CsrPmiYGdvSD";
+final api_key = Consts.Constants.collectApiKey;
 Future<List<TypeOfFuel>> getPrices() async {
   try {
     final position = await _determinePosition();

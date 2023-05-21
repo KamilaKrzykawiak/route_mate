@@ -30,7 +30,8 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
-    sdk: flutter
+    sdk: flutter 
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -42,11 +43,15 @@ dependencies:
   google_maps_flutter: ^2.2.6
   google_maps_flutter_web: ^0.4.0+8
   dio: ^5.1.2
+  google_places_flutter: ^0.0.3
+  geocoding: ^2.0.0
+  geocoder: ^0.2.1
+
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.11.0"
 
 flutter_icons:
   android: true
@@ -76,6 +81,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  assets:
+    - assets/logo/
+    
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

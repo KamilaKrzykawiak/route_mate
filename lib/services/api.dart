@@ -18,7 +18,7 @@ Future<List<TypeOfFuel>> getPrices() async {
     final body = json.decode(response.body);
     return [
       TypeOfFuel("PB 95", double.parse(body['result']['gasoline']) * 4.14),
-      TypeOfFuel("lpg", double.parse(body['result']['lpg']) * 4.14),
+      TypeOfFuel("LPG", double.parse(body['result']['lpg']) * 4.14),
       TypeOfFuel("Diesel", double.parse(body['result']['diesel']) * 4.14)
     ];
   } catch (e) {

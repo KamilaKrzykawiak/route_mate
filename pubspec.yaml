@@ -45,7 +45,7 @@ dependencies:
   dio: ^5.1.2
   google_places_flutter: ^0.0.3
   geocoding: ^2.0.0
-  geocoder: ^0.2.1
+  flutter_polyline_points: ^1.0.0
 
 
 

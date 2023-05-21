@@ -45,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   double nok = 0;
   double afc = 0;
   double nop = 0;
+
   bool isLoading = true;
 
   @override
@@ -168,8 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   nok *
                                   0.01 *
                                   afc /
-                                  nop);
-                              getDistanceMatrix();
+                                  nop);                              
                               showDialog(
                                 context: context,
                                 builder: (context) {

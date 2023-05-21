@@ -4,7 +4,6 @@ import 'package:chippin_in/pages/tripDetailForm.dart';
 import 'package:chippin_in/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:chippin_in/shared/constants.dart' as Consts;
-import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
@@ -23,8 +22,6 @@ class _DestinationFormState extends State<DestinationForm> {
   TextEditingController startController = TextEditingController();
   TextEditingController finishController = TextEditingController();
   bool isLoading = false;
-  LatLng? startLoc;
-  LatLng? finishLoc;
 
   @override
   void initState() {
@@ -65,13 +62,7 @@ class _DestinationFormState extends State<DestinationForm> {
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 20)),
                             onPressed: () {
-                              startLoc = getCoordinatesFromAddress(
-                                  startController.text) as LatLng;
-                              finishLoc = getCoordinatesFromAddress(
-                                  finishController.text) as LatLng;
-
                               sendDataToSecondScreen(context);
-
                               //getStartCoordinates();
                             },
                           ),
@@ -90,9 +81,11 @@ class _DestinationFormState extends State<DestinationForm> {
           textEditingController: startController,
           googleAPIKey: Consts.Constants.googleApiKey,
           inputDecoration: textInputDecoration.copyWith(
-              labelText: "Start",
-              prefixIcon: Icon(Icons.outlined_flag,
-                  color: Consts.Constants.primaryColor)),
+            labelText: "Start",
+            prefixIcon:
+                Icon(Icons.outlined_flag, color: Consts.Constants.primaryColor),
+            contentPadding: Consts.Constants.edgeInsets,
+          ),
           debounceTime: 800,
           itmClick: (Prediction prediction) {
             startController.text = prediction.description;
@@ -127,13 +120,14 @@ class _DestinationFormState extends State<DestinationForm> {
   }
 
   void sendDataToSecondScreen(BuildContext context) {
-    String startText = startController.text;
-    String finishText = finishController.text;
+    String startLocAddress = startController.text;
+    String finishLocAddress = finishController.text;
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              TripDetailForm(startLoc: startLoc, finishLoc: finishLoc),
+          builder: (context) => TripDetailForm(
+              startLocAddress: startLocAddress,
+              finishLocAddress: finishLocAddress),
         ));
   }
 

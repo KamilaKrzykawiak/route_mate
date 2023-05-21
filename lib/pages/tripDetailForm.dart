@@ -1,3 +1,4 @@
+import 'package:chippin_in/pages/tripSummaryForm.dart';
 import 'package:chippin_in/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:chippin_in/shared/constants.dart' as Consts;
@@ -7,21 +8,22 @@ import '../services/api.dart';
 import '../widgets/type_of_fuel.dart';
 
 class TripDetailForm extends StatefulWidget {
-  final LatLng? startLoc;
-  final LatLng? finishLoc;
-  TripDetailForm({Key? key, required this.startLoc, required this.finishLoc})
+  final String startLocAddress;
+  final String finishLocAddress;
+  TripDetailForm(
+      {Key? key, required this.startLocAddress, required this.finishLocAddress})
       : super(key: key);
 
   @override
-  State<TripDetailForm> createState() =>
-      _TripDetailFormState(startLoc: startLoc, finishLoc: finishLoc);
+  State<TripDetailForm> createState() => _TripDetailFormState(
+      startLocAddress: startLocAddress, finishLocAddress: finishLocAddress);
 }
 
 class _TripDetailFormState extends State<TripDetailForm> {
-  final LatLng? startLoc;
-  final LatLng? finishLoc;
+  final String startLocAddress;
+  final String finishLocAddress;
   _TripDetailFormState(
-      {Key? key, required this.startLoc, required this.finishLoc});
+      {required this.startLocAddress, required this.finishLocAddress});
 
   final formKey = GlobalKey<FormState>();
   bool isLoading = false;
@@ -31,6 +33,7 @@ class _TripDetailFormState extends State<TripDetailForm> {
 
   double averFuelConsuption = 0;
   double numOfPeople = 0;
+  double price = 0;
 
   @override
   void initState() {
@@ -98,8 +101,7 @@ class _TripDetailFormState extends State<TripDetailForm> {
                           ),
                         ),
                         //placesStartAutoCompleteTextField(),
-                        TextFormField(
-                          obscureText: true,
+                        TextFormField(                          
                           decoration: textInputDecoration.copyWith(
                               labelText: "Average fuel consumption:",
                               prefixIcon: Icon(Icons.local_fire_department,
@@ -116,8 +118,7 @@ class _TripDetailFormState extends State<TripDetailForm> {
                           },
                         ),
                         const SizedBox(height: 15),
-                        TextFormField(
-                          obscureText: true,
+                        TextFormField(                          
                           decoration: textInputDecoration.copyWith(
                               labelText: "Number of people to chip in:",
                               prefixIcon: Icon(Icons.hail,
@@ -147,9 +148,8 @@ class _TripDetailFormState extends State<TripDetailForm> {
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 20)),
                             onPressed: () {
-                              if (startLoc != null) {
-                                print(startLoc?.latitude.toString());
-                              }
+                              price = selectedType!.value;
+                              sendDataToThirdScreen(context);
                               //register();
                               //getStartCoordinates();
                             },
@@ -160,5 +160,18 @@ class _TripDetailFormState extends State<TripDetailForm> {
                   ),
                 ),
               ));
+  }
+
+  void sendDataToThirdScreen(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TripSummaryForm(
+              startLocAddress: startLocAddress,
+              finishLocAddress: finishLocAddress,
+              averFuelConsuption: averFuelConsuption,
+              numOfPeople: numOfPeople,
+              price: price,),
+        ));
   }
 }

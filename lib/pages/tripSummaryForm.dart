@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:chippin_in/shared/constants.dart' as Consts;
@@ -179,4 +178,6 @@ class _TripSummaryFormState extends State<TripSummaryForm> {
             northeast: LatLng(maxLat, maxLong)),
         20));
   }
+
+
 }

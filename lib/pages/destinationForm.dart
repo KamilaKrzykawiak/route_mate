@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:chippin_in/pages/tripDetailForm.dart';
 import 'package:chippin_in/widgets/widgets.dart';
 import 'package:flutter/material.dart';

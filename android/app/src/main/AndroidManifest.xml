@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
    <application
         android:label="chippin_in"
-        android:name="${applicationName}"
+        android:name="chippin_in"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -19,12 +19,12 @@
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
                  to determine the Window background behind the Flutter UI. -->
-            <meta-data>
-              android:name="io.flutter.embedding.android.NormalTheme"
-              android:resource="@style/NormalTheme"
-              android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyD7w6X2U8SffS4vt6CT29ksceUUPzg1tCk"
-            </meta-data>
+            <!-- <meta-data>
+            android:name="io.flutter.embedding.android.NormalTheme"
+            android:resource="@style/NormalTheme" 
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD7w6X2U8SffS4vt6CT29ksceUUPzg1tCk"
+            </meta-data> -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -35,5 +35,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        
     </application>
 </manifest>

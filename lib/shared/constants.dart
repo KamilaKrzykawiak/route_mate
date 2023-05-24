@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Constants {
   // klucze
-  static String collectApiKey = "6dJ5Ypb1Qyo33IRfABE2bV:7sjGzFqFtrxFbfI7Lvo1yn";
+  static String collectApiKey = "2b0yJA0CsgKpRmxkhN5Jqn:1NJNL5yiYqlR0cfSEFKH7Z";
   static String googleApiKey = "AIzaSyD7w6X2U8SffS4vt6CT29ksceUUPzg1tCk";
 
   static String projectId = "TV-app";

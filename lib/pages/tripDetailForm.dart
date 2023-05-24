@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../services/api.dart';
 import '../widgets/type_of_fuel.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class TripDetailForm extends StatefulWidget {
   final String startLocAddress;
@@ -26,7 +27,7 @@ class _TripDetailFormState extends State<TripDetailForm> {
       {required this.startLocAddress, required this.finishLocAddress});
 
   final formKey = GlobalKey<FormState>();
-  bool isLoading = false;
+  bool isLoading = true;
 
   List<TypeOfFuel> typeOfFuel = [];
   TypeOfFuel? selectedType;
@@ -92,16 +93,15 @@ class _TripDetailFormState extends State<TripDetailForm> {
                         Padding(
                           padding: EdgeInsets.only(top: 30, bottom: 30),
                           child:
-                              //Printing Item on Text Widget
                               Text(
                             '${selectedType?.value.toStringAsFixed(2)} zł per liter',
                             style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 20,
                                 color: Consts.Constants.primaryColor),
                           ),
                         ),
-                        //placesStartAutoCompleteTextField(),
-                        TextFormField(                          
+                        TextFormField(
+                          keyboardType: TextInputType.number,
                           decoration: textInputDecoration.copyWith(
                               labelText: "Average fuel consumption:",
                               prefixIcon: Icon(Icons.local_fire_department,
@@ -114,11 +114,12 @@ class _TripDetailFormState extends State<TripDetailForm> {
                             }
                           },
                           onChanged: (val) {
-                            averFuelConsuption = val as double;
+                            averFuelConsuption = double.parse(val);
                           },
                         ),
                         const SizedBox(height: 15),
-                        TextFormField(                          
+                        TextFormField(
+                          keyboardType: TextInputType.number,
                           decoration: textInputDecoration.copyWith(
                               labelText: "Number of people to chip in:",
                               prefixIcon: Icon(Icons.hail,
@@ -131,27 +132,24 @@ class _TripDetailFormState extends State<TripDetailForm> {
                             }
                           },
                           onChanged: (val) {
-                            numOfPeople = val as double;
+                            numOfPeople = double.parse(val);
                           },
                         ),
-                        //placesFinishAutoCompleteTextField(),
                         const SizedBox(height: 15),
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Consts.Constants.primaryColor,
-                                elevation: 0,
+                                elevation: 0,                                 
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30))),
-                            child: const Text("Zatwierdź",
+                            child: const Text("Confirm",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 20)),
                             onPressed: () {
                               price = selectedType!.value;
-                              sendDataToThirdScreen(context);
-                              //register();
-                              //getStartCoordinates();
+                              sendDataToThirdScreen(context);                              
                             },
                           ),
                         ),
@@ -167,11 +165,12 @@ class _TripDetailFormState extends State<TripDetailForm> {
         context,
         MaterialPageRoute(
           builder: (context) => TripSummaryForm(
-              startLocAddress: startLocAddress,
-              finishLocAddress: finishLocAddress,
-              averFuelConsuption: averFuelConsuption,
-              numOfPeople: numOfPeople,
-              price: price,),
+            startLocAddress: startLocAddress,
+            finishLocAddress: finishLocAddress,
+            averFuelConsuption: averFuelConsuption,
+            numOfPeople: numOfPeople,
+            price: price,
+          ),
         ));
   }
 }

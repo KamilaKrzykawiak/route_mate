@@ -83,6 +83,7 @@ flutter:
 
   assets:
     - assets/logo/
+    - assets/logo/map_style.txt
     
   # To add assets to your application, add an assets section, like this:
   # assets:
